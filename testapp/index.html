@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Critberg Client</title>
+    <style media="screen">
+      body {
+        font-family: monospace;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.dev.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <div class="input-area">
+      <input id="input" placeholder="data here">
+      <button id="btn" name="button">send</button>
+      <span id="comment"></span>
+    </div>
+    <div class="output-area" id="output">
+
+    </div>
+  </body>
+  <script type="text/javascript">
+    const socket = io();
+    socket.on('data', value => {
+      const json = JSON.stringify(value);
+      output.innerHTML += `${json}<br>`;
+    })
+    btn.onclick = event => {
+      try {
+        const json = JSON.parse(input.value);
+        socket.emit('data', json);
+        input.value = '';
+        comment.innerHTML = '';
+      } catch (e) {
+        comment.innerHTML = 'invalid JSON';
+      }
+    }
+  </script>
+</html>
