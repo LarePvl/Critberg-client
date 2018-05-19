@@ -36,6 +36,12 @@ io.on('connection', websocket => {
 
   socket.on('error', error => {
     console.log(error.code);
+    websocket.emit('data', `Error: ${error.code}. Please refresh the page.`);
+  });
+  socket.setTimeout(3000);
+  socket.on('timeout', () => {
+    console.log('timeout');
+    websocket.emit('data', 'Connection Timeout. Please refresh the page');
   })
 });
 
