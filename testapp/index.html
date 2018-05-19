@@ -6,27 +6,51 @@
     <style media="screen">
       body {
         font-family: monospace;
+        margin-top: 55px;
+      }
+
+      input {
+        width:512px;
+      }
+
+      .input-area {
+        margin-top: 10px;
+        position: fixed;
+        top: 0;
       }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.dev.js" charset="utf-8"></script>
   </head>
   <body>
     <div class="input-area">
-      <input id="input" placeholder="data here">
-      <button id="btn" name="button">send</button>
-      <span id="comment"></span>
+      <button id="identifyButton">Identify</button>
+      <button id="messageButton">Message</button>
+      <button id="queueButton">Queue</button>
+      <button id="passButton">Pass</button>
+      <button id="useButton">Use</button>
+      <br/>
+      <form id="frm">
+        <input id="input" placeholder="data here" />
+        <button type="submit">send</button>
+        <span id="comment"></span>
+      </form>
     </div>
-    <div class="output-area" id="output">
-
-    </div>
+    <div class="output-area" id="output"></div>
   </body>
   <script type="text/javascript">
+    identifyButton.onclick = () => input.value = '{"type":"identify","name":"YOURNAME"}';
+    messageButton.onclick = () => input.value = '{"type":"message","target":"FRIENDNAME","content":"MESSAGE"}';
+    queueButton.onclick = () => input.value = '{"type":"queue","deck":[]}';
+    passButton.onclick = () => input.value = '{"type":"game_action","subtype":"pass"}';
+    useButton.onclick = () => input.value = '{"type":"game_action","subtype":"use","instance":"UUID"}';
+
     const socket = io();
     socket.on('data', value => {
       const json = JSON.stringify(value);
       output.innerHTML += `${json}<br>`;
     })
-    btn.onclick = event => {
+    frm.onsubmit = event => {
+      event.preventDefault();
       try {
         const json = JSON.parse(input.value);
         socket.emit('data', json);
