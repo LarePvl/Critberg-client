@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+
+      .noselect {
+        -webkit-touch-callout: none; /* iOS Safari */
+          -webkit-user-select: none; /* Safari */
+           -khtml-user-select: none; /* Konqueror HTML */
+             -moz-user-select: none; /* Firefox */
+              -ms-user-select: none; /* Internet Explorer/Edge */
+                  user-select: none; /* Non-prefixed version, currently
+                                        supported by Chrome and Opera */
+      }
+
+      .card {
+        position: relative;
+        display: inline-block;
+        width: 256px;
+        height: 358.4px;
+        background-color: #efefef;
+        border-radius: 5px;
+        border-width: 1px;
+        border-style: solid;
+        background-size: 100%;
+        overflow: hidden;
+        text-align: center;
+        transition: transform 0.2s;
+      }
+
+      .card .name {
+        color: white;
+        width: 100%;
+        display: block;
+        font-size: 2em;
+        font-family: fantasy;
+        text-shadow: 0px 0px 10px #000;
+        background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,0.4) 15%,rgba(255,255,255,0.7) 19%,rgba(255,255,255,0.75) 20%,rgba(255,255,255,0.8) 50%,rgba(255,255,255,0.75) 80%,rgba(255,255,255,0.7) 81%,rgba(255,255,255,0.4) 85%,rgba(255,255,255,0) 100%);
+        position: absolute;
+        bottom: 0;
+      }
+
+      .card .stats {
+        position: absolute;
+        bottom: 0;
+        flex-direction: row;
+        justify-content: space-between;
+        align-content: center;
+        width: 100%;
+        font-size: 2em;
+        color: white;
+        display: flex;
+        font-family: fantasy;
+        text-shadow: 0px 0px 10px #000;
+      }
+
+      .circle {
+        border-color: black;
+        border-radius: 20px;
+        border-style: solid;
+        border-width: 1px;
+      }
+
+      .card .stats .attack {
+        width: 1.2em;
+        height: auto;
+        background-color: yellow;
+      }
+
+      .card .stats .health {
+        width: 1.2em;
+        height: auto;
+        background-color: red;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="cardlist">
+      <div v-for="card in cards" class="card noselect" v-bind:style="{'background-image': `url('${card.backgroundImage}')`}">
+        <div class="stats">
+          <span class="attack circle">{{card.attack}}</span>
+          <span class="health circle">{{card.health}}</span>
+        </div>
+        <span class="name">{{card.name}}</span>
+      </div>
+      <!--div class="card" style="background-image:url('https://i.pinimg.com/originals/96/3e/09/963e092ac2ff0e9bbf4fdc27d6128e11.gif')">
+        <div class="BG">
+          <span class="name">The Nemesis</span>
+        </div>
+      </div-->
+    </div>
+  </body>
+  <script type="text/javascript">
+    new Vue({
+      el:'#cardlist',
+      data: {
+        cards: [
+          {
+            name: 'Loli Squire',
+            backgroundImage: './LoliSquire.jpg',
+            cost: {
+              'Apples': 2
+            },
+            fuel: {
+              'Apples': 1
+            },
+            health: 1,
+            attack: 1
+          },
+          {
+            name: 'Older Goder',
+            backgroundImage: 'https://i.pinimg.com/originals/96/3e/09/963e092ac2ff0e9bbf4fdc27d6128e11.gif',
+            cost: {
+              'Apples': 2
+            },
+            fuel: {
+              'Apples': 1
+            },
+            health: 99,
+            attack: 99
+          }
+        ]
+      }
+    });
+  </script>
+</html>

@@ -49,6 +49,7 @@
       <button id="queueButton">Queue</button>
       <button id="passButton">Pass</button>
       <button id="useButton">Use</button>
+      <button id="promptButton">Prompt</button>
       <br/>
       <form id="frm">
         <input id="input" placeholder="data here" />
@@ -64,11 +65,12 @@
     queueButton.onclick = () => input.value = '{"type":"queue","deck":[[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]}';
     passButton.onclick = () => input.value = '{"type":"game_action","subtype":"pass"}';
     useButton.onclick = () => input.value = '{"type":"game_action","subtype":"use","instance":"UUID"}';
+    promptButton.onclick = () => input.value = '{"type":"game_action","subtype":"prompt","params":[]}';
 
     const socket = io();
     socket.on('data', value => {
       const json = JSON.stringify(value);
-      output.innerHTML += `<span class="message">${json}</span><br>`;
+      output.innerHTML = `<span class="message">${json}</span><br>` + output.innerHTML;
     })
     frm.onsubmit = event => {
       event.preventDefault();
